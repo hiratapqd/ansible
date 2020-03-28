@@ -1,0 +1,10 @@
+- name: execute linux shell
+#  remote_user: root
+#  sudo: yes
+#  become: true
+#  become_user: ansible
+  hosts: 192.168.56.108
+  tasks:
+    - name: execute script
+      command: sh /tmp/ansible/aysha.sh
+#  delegate_to: 192.168.56.108

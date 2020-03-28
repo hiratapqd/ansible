@@ -1,0 +1,7 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: run my_first_powershell
+    win_shell: c:\target\my_exec.bat

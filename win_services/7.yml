@@ -1,0 +1,24 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: list folders
+    win_find:
+      paths: c:\target
+      patterns: '*.txt'
+#      file_type: directory
+    register: finded_folders
+
+  - name: finded_folders -> var
+    debug:
+      var: finded_folders.files
+
+
+#  - name:
+#    debug:
+##      msg: "{{ item.path }}"
+#      msg: "finded_folders"
+##    when: finded_folders|sucess
+#    with_items:
+#      - "{{ finded_folders}}"

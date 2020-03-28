@@ -1,0 +1,52 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: Check Themes
+    win_service:
+      name: Themes
+    register: result
+#    failed_when: " result.state != 'running'"
+    ignore_errors: yes
+
+  - name: Check Power
+    win_service:
+      name: Power
+    register: result1
+#    failed_when: " result1.state != 'running'"
+    ignore_errors: yes
+
+  - name: Check SNMP trap
+    win_service:
+      name: SNMP trap
+    register: result2
+#    failed_when: " result2.state != 'stopped'"
+    ignore_errors: yes
+
+  - name: result
+    debug:
+      msg: "[INFO] Service Theme is running"
+    when: "result.state == 'running'"
+
+  - name: result1
+    debug:
+      msg: "[INFO] Service Power is running"
+    when: "result1.state == 'running'"
+
+  - name: result2
+    debug:
+      msg: "[INFO] Service SNMP trap is stopped"
+    when: "result2.state == 'stopped'"
+
+  - fail:
+      msg: "[ERROR] Service Theme NOT running"
+    when: "result.state != 'running'"
+
+  - fail:
+      msg: "[ERROR] Service Power NOT running"
+    when: "result1.state != 'running'"
+
+  - fail:
+      msg: "[ERROR] Service SNMP trap NOT stopped"
+    when: "result2.state != 'stopped'"

@@ -1,0 +1,29 @@
+- hosts: win
+  gather_facts: false
+  vars:
+    file_vars:
+      - {id: 1, name: 20-03-2020_20}
+      - {id: 2, name: 20-03-2020_21}
+
+  tasks:
+    - name: Checking existing file id
+      win_stat:
+        path: c:\source\{{ item.id }}.txt
+      with_items: "{{ file_vars }}"
+      register: check_file_id
+
+    - name: Checking existing file name
+      win_stat:
+        path: c:\source\{{ item.name }}.txt
+      with_items: "{{ file_vars }}"
+      register: check_file_name
+
+    - debug:
+        msg: 'file id {{item.item.id}} (name {{item.item.name}}) exists'
+      with_items: "{{ check_file_id.results }}"
+#      when: item.id.exists
+
+    - debug:
+        msg: 'file name {{item.item.name}} (id {{item.item.id}}) exists'
+      with_items: "{{ check_file_name.stat.lastwritetime }}"
+#      when: item.stat.exists == true

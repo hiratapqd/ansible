@@ -1,0 +1,68 @@
+---
+- hosts: win
+
+  tasks:
+
+
+  - name: new variable with current date time
+    set_fact: temp="{{lookup('pipe','date \"+%d-%m-%Y\"')}}_20.txt"
+  - name: print variable
+    debug: msg="Current date and time is {{temp}}"
+
+  - name: list files in the destination folder
+    win_find:
+      paths: c:\rundeck
+      patterns: "*20.txt"
+      use:regex: true
+    register: wildcard_files_to_delete
+
+  - name: delete files in the destination folder
+    win_file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items: "{{ wildcard_files_to_delete.files }}"
+
+  - name: get stat from c:\source\file
+    win_stat:
+      path: c:\source\{{ temp }}
+    register: st
+
+  - name: get stat from c:\target\file
+    win_stat:
+      path: c:\target\20-03-2020_20.txt
+    register: st1
+
+  - name: get mtime st
+    debug:
+      msg: "{{ st.stat.lastwritetime }}"
+
+  - name: get mtime st1
+    debug:
+      msg: "{{ st1.stat.lastwritetime }}"
+
+  - name: file in c:\target is earlier
+    win_copy:
+      src: C:\target\20-03-2020_20.txt
+      dest: C:\rundeck\20-03-2020_20target.txt
+      remote_src: yes
+      msg: " st1 moved"
+    when: " st1.stat.lastwritetime > st.stat.lastwritetime"
+
+  - name: file in c:\source is earlier
+    win_copy:
+      src: C:\source\20-03-2020_20.txt
+      dest: C:\rundeck\20-03-2020_20source.txt
+      remote_src: yes
+      msg: " st moved"
+    when: " st1.stat.lastwritetime < st.stat.lastwritetime"
+
+
+
+#sintaxe correta para ver todos os parametros
+#  - name: get mtime
+#    debug:
+#      msg: "{{ st }}"
+
+#    debug:
+#      msg: " st is earlier"
+#    when: "{{ st1.stat.lastwritetime }}" > "{{ st.stat.lastwritetime }}"

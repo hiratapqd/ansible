@@ -1,0 +1,10 @@
+- name: execute linux shell
+  hosts: ubuntu
+  tasks:
+    - name: execute script
+      shell: /tmp/ansible/aysha.sh
+#- name: execute linux shell
+#  hosts: ubuntu
+#  tasks:
+#    - name: execute script
+#      command: sh /tmp/ansible/aysha.sh

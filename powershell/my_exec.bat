@@ -1,0 +1,1 @@
+echo "foo bar" >> c:\target\funcionou.txt

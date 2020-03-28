@@ -1,0 +1,30 @@
+---
+- hosts:
+    - localhost
+
+  tasks:
+    - stat:
+        path: /tmp/hirata.txt
+      register: result
+
+#    - name: list files in temp directory
+#      shell: ls /temp
+#      register: results
+
+
+    - name: Sending an email
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: hiratapqd@gmail.com
+        password: kozevingqstzgtsb
+        to: Sergio Hirata <sergio.hirata@btgpactual.com>
+        subject: Ansible-report
+        body: 'the file /tmp/hirata.txt exists= {{ result.stat.exists }}.'
+#        body: 'System  has been successfully provisioned.'
+      delegate_to: localhost
+
+  #  - debug: msg="{{result.state}}"
+#
+#  - debug: msg="running"
+#    when: result.state is not defined or result.name is not defined

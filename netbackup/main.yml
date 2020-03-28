@@ -1,0 +1,10 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: delete lock file
+    win_file:
+      path: "C:\\target\\netbackup.lck"
+      state: absent
+    delegate_to: winclient

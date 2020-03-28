@@ -1,0 +1,20 @@
+---
+
+- hosts: win
+
+  tasks:
+  - name: Check Themes
+    win_service:
+      name: Spooler
+    register: result
+
+  - debug: msg="The service Spooler is {{result.state}}"
+
+#  - name: stop Themes
+#    win_service:
+#      name: Spooler
+##      state: stopped
+#      state: started
+#    register: result1
+#
+#  - debug: msg="{{result1.state}}"

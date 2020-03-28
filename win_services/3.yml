@@ -1,0 +1,8 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: run my_first_powershell
+    win_shell: "c:\\'my rundeck'\\'my first powershell.ps1'"
+#    win_shell: 'c:\target\my_first_powershell.ps1'

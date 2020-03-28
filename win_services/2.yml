@@ -1,0 +1,7 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: kill internet explorerrrrrr
+    win_shell: Taskkill /IM powershell.exe /F
