@@ -1,0 +1,18 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: run powershell_with_function.ps1
+    win_shell: "c:\\'my rundeck'\\'teste.ps1'"
+    register: result
+    failed_when: "'ERRO' in result.stdout"
+
+  - name: result
+    debug:
+      msg: "arquivo nao encontrado"
+    when: "'ERRO' not in result.stdout"
+
+#  - fail:
+#      msg: "arquivo encontrado"
+#    when: "'ERRO' in result.stdout"
