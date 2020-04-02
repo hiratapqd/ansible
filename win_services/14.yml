@@ -1,0 +1,58 @@
+---
+- hosts: win
+
+  tasks:
+
+  - name: Check Themes
+    win_service:
+      name: Themes
+    register: result
+
+  - name: Check Power
+    win_service:
+      name: Power
+    register: result1
+
+  - name: Check SNMP trap
+    win_service:
+      name: SNMP trap
+    register: result2
+
+  - name: define variable for expected result
+    set_fact: aysha="[INFO] Service Theme is {{ result.state }}"
+    when: " result.state == 'running'"
+
+  - name: define variable for unexpected result
+    set_fact: aysha="[ERRO] Service Theme is {{ result.state }}"
+    when: " result.state != 'running'"
+
+  - name: define variable for expected result
+    set_fact: aysha1="[INFO] Service Power is {{ result1.state }}"
+    when: " result1.state == 'running'"
+
+  - name: define variable for unexpected result
+    set_fact: aysha1="[ERRO] Service Power is {{ result1.state }}"
+    when: " result1.state != 'running'"
+
+  - name: define variable for expected result
+    set_fact: aysha2="[INFO] Service SNMP Trap is {{ result2.state }}"
+    when: " result2.state == 'stopped'"
+
+  - name: define variable for unexpected result
+    set_fact: aysha2="[ERRO] Service SNMP Trap is {{ result2.state }}"
+    when: " result2.state != 'stopped'"
+
+
+
+  - mail:
+      host: smtp.gmail.com
+      port: 587
+      username: hiratapqd@gmail.com
+      password: kozevingqstzgtsb
+      to: Sergio Hirata <sergio@boxdahora.com.br>
+      subject: '[TESTE] 14.yml Ansible-report'
+      subtype: html
+      body: ' {{ aysha }}<br><br><br>
+             {{ aysha1 }}<br><br><br>
+             {{ aysha2 }}  '
+    delegate_to: localhost

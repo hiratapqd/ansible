@@ -17,7 +17,7 @@
 
   - name: get mtime from c:\source\file
     win_stat:
-      path: {{ aysha }}
+      path: "{{ aysha }}"
     register: st
 
   #sintaxe correta para ver todos os parametros
