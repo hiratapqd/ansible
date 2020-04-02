@@ -47,9 +47,9 @@
   - mail:
       host: smtp.gmail.com
       port: 587
-      username: hiratapqd@gmail.com
-      password: kozevingqstzgtsb
-      to: Sergio Hirata <sergio@boxdahora.com.br>
+      username: sergio_hirata@example.com
+      password: app_email_password
+      to: jane Doe <Jane_doe@example.com>
       subject: '[TESTE] 14.yml Ansible-report'
       subtype: html
       body: ' {{ aysha }}<br><br><br>
